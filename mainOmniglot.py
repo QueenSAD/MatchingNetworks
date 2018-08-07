@@ -24,7 +24,6 @@ total_val_batches = 100
 total_test_batches = 250
 # Parse other options
 args = Options().parse()
-
 data = omniglotNShot.OmniglotNShotDataset(
     dataroot=args.dataroot,
     batch_size=batch_size,
@@ -34,7 +33,6 @@ data = omniglotNShot.OmniglotNShotDataset(
 obj_oneShotBuilder = OneShotBuilder(data)
 obj_oneShotBuilder.build_experiment(batch_size, classes_per_set,
                                     samples_per_class, channels, fce)
-
 best_val = 0.
 
 for e in range(0, total_epochs):

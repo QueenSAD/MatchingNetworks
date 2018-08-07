@@ -79,13 +79,15 @@ class OmniglotNShotDataset():
             "train": self.x_train,
             "val": self.x_val,
             "test": self.x_test
-        }  #original data cached
+        } #original data cached
+      
         self.datasets_cache = {
             "train": self.load_data_cache(
                 self.datasets["train"]),  #current epoch data cached
             "val": self.load_data_cache(self.datasets["val"]),
             "test": self.load_data_cache(self.datasets["test"])
         }
+        
 
     def normalization(self):
         """
@@ -101,16 +103,17 @@ class OmniglotNShotDataset():
         self.x_train = (self.x_train - self.mean) / self.std
         self.x_val = (self.x_val - self.mean) / self.std
         self.x_test = (self.x_test - self.mean) / self.std
+        
 
     def load_data_cache(self, data_pack):
         """
-        Collects 1000 batches data for N-shot learning
+        Collects 200 batches data for N-shot learning
         :param data_pack: Data pack to use (any one of train, val, test)
         :return: A list with [support_set_x, support_set_y, target_x, target_y] ready to be fed to our networks
         """
         n_samples = self.samples_per_class * self.classes_per_set
         data_cache = []
-        for sample in range(1000):
+        for sample in range(200):
             support_set_x = np.zeros((self.batch_size, n_samples, 28, 28, 1))
             support_set_y = np.zeros((self.batch_size, n_samples))
             target_x = np.zeros(

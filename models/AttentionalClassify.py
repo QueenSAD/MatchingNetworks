@@ -9,6 +9,7 @@
 ##+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 import torch.nn as nn
+import torch.nn.functional as f
 import unittest
 
 class AttentionalClassify(nn.Module):
@@ -24,8 +25,7 @@ class AttentionalClassify(nn.Module):
                                                                             [sequence_length,  batch_size, num_classes]
         :return: Softmax pdf
         """
-        softmax = nn.Softmax()
-        softmax_similarities = softmax(similarities)
+        softmax_similarities = f.softmax(similarities,1)
         preds = softmax_similarities.unsqueeze(1).bmm(support_set_y).squeeze()
         return preds
 

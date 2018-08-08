@@ -173,13 +173,11 @@ class miniImageNetBuilder:
             acc, c_loss_value = self.matchingNet(
                 x_support_set.to(device), y_support_set_one_hot.to(device),
                 x_target.to(device), y_target.to(device))
+            print("val_loss: {}, val_accuracy: {}".format(
+                c_loss_value.item(), acc.item()))
 
-            iter_out = "val_loss: {}, val_accuracy: {}".format(
-                c_loss_value.data[0], acc.data[0])
-            print(iter_out)
-
-            total_val_c_loss += c_loss_value.data[0]
-            total_val_accuracy += acc.data[0]
+            total_val_c_loss += c_loss_value.item()
+            total_val_accuracy += acc.item()
 
         total_val_c_loss = total_val_c_loss / total_val_batches
         total_val_accuracy = total_val_accuracy / total_val_batches
@@ -218,13 +216,11 @@ class miniImageNetBuilder:
             acc, c_loss_value = self.matchingNet(
                 x_support_set.to(device), y_support_set_one_hot.to(device),
                 x_target.to(device), y_target.to(device))
+            print("test_loss: {}, test_accuracy: {}".format(
+                c_loss_value.data.item(), acc.data.item()))
 
-            iter_out = "test_loss: {}, test_accuracy: {}".format(
-                c_loss_value.data[0], acc.data[0])
-            print(iter_out)
-
-            total_test_c_loss += c_loss_value.data[0]
-            total_test_accuracy += acc.data[0]
+            total_test_c_loss += c_loss_value.data.item()
+            total_test_accuracy += acc.data.item()
 
         total_test_c_loss = total_test_c_loss / total_test_batches
         total_test_accuracy = total_test_accuracy / total_test_batches

@@ -1,7 +1,7 @@
 from datasets import miniImagenetOneShot
 from option import Options
 from experiments.OneShotMiniImageNetBuilder import miniImageNetBuilder
-
+from utils import easylog
 '''
 :param batch_size: Experiment batch_size
 :param classes_per_set: Integer indicating the number of classes per set
@@ -13,7 +13,7 @@ from experiments.OneShotMiniImageNetBuilder import miniImageNetBuilder
 # Experiment Setup
 batch_size = 10
 fce = True
-classes_per_set = 5
+classes_per_set = 2
 samples_per_class = 5
 channels = 3
 # Training setup
@@ -51,6 +51,8 @@ obj_oneShotBuilder.build_experiment(batch_size, classes_per_set,
                                     samples_per_class, channels, fce)
 
 best_val = 0.
+mylog = easylog.get_log()
+
 for e in range(0, total_epochs):
     total_c_loss, total_accuracy = obj_oneShotBuilder.run_training_epoch()
     print("Epoch {}: train_loss: {}, train_accuracy: {}".format(
@@ -65,8 +67,9 @@ for e in range(0, total_epochs):
         best_val = total_val_accuracy
         total_test_c_loss, total_test_accuracy = obj_oneShotBuilder.run_testing_epoch(
         )
-        print("Epoch {}: test_loss: {}, test_accuracy: {}".format(
-            e, total_test_c_loss, total_test_accuracy))
+        msg = "Epoch {}: test_loss: {}, test_accuracy: {}".format(
+            e, total_test_c_loss, total_test_accuracy)
+        mylog.info(msg)
 
     else:
         total_test_c_loss = -1
